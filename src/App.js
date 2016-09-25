@@ -14,6 +14,7 @@ export default class App extends Component {
       favorites: []
     };
     this.onListItem = this.onListItem.bind(this);
+    this.onItemDeleted = this.onItemDeleted.bind(this);
   }
 
   componentDidMount() {
@@ -38,8 +39,16 @@ export default class App extends Component {
   onListItem(key) {
     const items = this.state.favorites;
     const itemClicked = this.state.stores[parseInt(key)];
-    if (itemClicked) {
+    if (itemClicked && !items.includes(itemClicked.Name)) {
       this.setState({ favorites: items.concat(itemClicked.Name) });
+    }
+  }
+
+  onItemDeleted(key) {
+    const items = this.state.favorites;
+    const index = parseInt(key);
+    if (index >= 0) {
+      this.setState({ favorites: items.filter((_, i) => i !== index) });
     }
   }
 
@@ -76,7 +85,7 @@ export default class App extends Component {
 		  </ul>
 
 		  <Map markers={this.state.markers} onListItem={this.onListItem} />
-      <FavoriteList items={this.state.favorites} />
+      <FavoriteList items={this.state.favorites} onItemDeleted={this.onItemDeleted}/>
       </div>
     );
   }
