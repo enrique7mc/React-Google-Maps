@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import YourComponent from './YourComponent';
+import Geocoder from './api/Geocoder';
+import Map from './Map';
 
 export default class App extends Component {
   render() {
@@ -18,7 +19,7 @@ export default class App extends Component {
 		  <p>We'd love to see how you use JS and React to address these user stories.</p>
 		  <p>Feel free to add libraries, create new components, or otherwise change the codebase. This app is yours!</p>
 		  <p>Implementing the user stories listed should take between 2-5 hours. If you're having trouble, don't be afraid to ask for help!</p>
-		  
+
 		  <strong>Student user stories:</strong>
 		  <ul>
 		    <li>As a student, I want to see a map of Mexico City</li>
@@ -34,7 +35,7 @@ export default class App extends Component {
 		  	<li><i>That said, code that is easy to follow is always appreciated :)</i></li>
 		  </ul>
 
-		  <YourComponent/>
+		  <Map />
       </div>
     );
   }
