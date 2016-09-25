@@ -8,13 +8,10 @@ module.exports = {
   getLocationFromAddress(address) {
     let storeFromCache = Cache.get(address);
     if (storeFromCache) {
-      console.log('from cache');
       return new Promise((resolve) => {
         resolve(storeFromCache.location);
       });
     }
-
-    console.log('from api');
 
     const encodedAddress = encodeURIComponent(address);
     const requestUrl = `${GOOGLE_MAPS_BASE_URL}?address=${encodedAddress}&key=${MAPS_API_KEY}`;
@@ -25,7 +22,7 @@ module.exports = {
           throw new Error(res.data.error_message);
         }
 
-        if (!res.data.results) {
+        if (!res.data.results || !res.data.results[0]) {
           throw new Error('0 results were found');
         }
 

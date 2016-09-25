@@ -1,8 +1,48 @@
 import React, { Component } from 'react';
-import Geocoder from './api/Geocoder';
+import Cache from './util/Cache';
 import Map from './Map';
+import FavoriteList from './FavoriteList';
+import Stores from '../store_directory';
+import Geocoder from './api/Geocoder';
 
 export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      markers: [],
+      stores: [],
+      favorites: []
+    };
+    this.onListItem = this.onListItem.bind(this);
+  }
+
+  componentDidMount() {
+    Stores.slice(0, 20).map(store => {
+      return [Geocoder.getLocationFromAddress(store.Address), store];
+    }).forEach(([promise, store]) => {
+      promise.then(value => {
+        store.location = value;
+        if (!Cache.get(store.Address)) {
+          Cache.set(store.Address, store);
+        }
+        let markers = this.state.markers;
+        let stores = this.state.stores;
+        this.setState({markers: markers.concat(value)});
+        this.setState({stores: stores.concat(store)});
+      }, reason => {
+        console.log(reason)
+      });
+    });
+  }
+
+  onListItem(key) {
+    const items = this.state.favorites;
+    const itemClicked = this.state.stores[parseInt(key)];
+    if (itemClicked) {
+      this.setState({ favorites: items.concat(itemClicked.Name) });
+    }
+  }
+
   render() {
     return (
       <div>
@@ -35,7 +75,8 @@ export default class App extends Component {
 		  	<li><i>That said, code that is easy to follow is always appreciated :)</i></li>
 		  </ul>
 
-		  <Map />
+		  <Map markers={this.state.markers} onListItem={this.onListItem} />
+      <FavoriteList items={this.state.favorites} />
       </div>
     );
   }
