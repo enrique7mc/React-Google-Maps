@@ -3,6 +3,8 @@ import GoogleMap from 'google-map-react';
 import Geocoder from './api/Geocoder';
 import Stores from '../store_directory';
 import MyGreatPlace from './MyGreatPlace';
+import Cache from './util/Cache';
+
 
 /*
 * Use this component as a launching-pad to build your functionality.
@@ -31,14 +33,19 @@ export default class Map extends Component {
   }
 
   componentDidMount() {
-    const promises = Stores.slice(0, 2).map(store => {
-      return Geocoder.getLocationFromAddress(store.Address);
-    });
-    Promise.all(promises).then(values => {
-      let markers = this.state.markers;
-      this.setState({markers: markers.concat(values)});
-    }, reason => {
-      console.log(reason)
+    Stores.slice(0, 2).map(store => {
+      return [Geocoder.getLocationFromAddress(store.Address), store];
+    }).forEach(([promise, store]) => {
+      promise.then(value => {
+        store.location = value;
+        if (!Cache.get(store.Address)) {
+          Cache.set(store.Address, store);
+        }
+        let markers = this.state.markers;
+        this.setState({markers: markers.concat(value)});
+      }, reason => {
+        console.log(reason)
+      });
     });
   }
 
@@ -48,7 +55,8 @@ export default class Map extends Component {
         <GoogleMap
           bootstrapURLKeys={{key: 'AIzaSyCVH8e45o3d-5qmykzdhGKd1-3xYua5D2A'}}
           defaultCenter={this.props.center}
-          defaultZoom={this.props.zoom}>
+          defaultZoom={this.props.zoom}
+          onChildClick={(e)=>{console.log(e)}} >
           {this.state.markers.map((m, i) =>
             <MyGreatPlace key={`marker${i}`} lat={m.lat} lng={m.lng} text={`${i+1}`} />)}
         </GoogleMap>

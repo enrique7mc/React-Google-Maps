@@ -1,10 +1,21 @@
 import axios from 'axios';
+import Cache from '../util/Cache';
 
 const MAPS_API_KEY = 'AIzaSyDVsujBY3xLG6MyeAgXnCcbhB6NzbbF458';
 const GOOGLE_MAPS_BASE_URL = 'https://maps.googleapis.com/maps/api/geocode/json';
 
 module.exports = {
   getLocationFromAddress(address) {
+    let storeFromCache = Cache.get(address);
+    if (storeFromCache) {
+      console.log('from cache');
+      return new Promise((resolve) => {
+        resolve(storeFromCache.location);
+      });
+    }
+
+    console.log('from api');
+
     const encodedAddress = encodeURIComponent(address);
     const requestUrl = `${GOOGLE_MAPS_BASE_URL}?address=${encodedAddress}&key=${MAPS_API_KEY}`;
 
