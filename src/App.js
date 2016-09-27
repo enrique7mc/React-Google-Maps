@@ -18,7 +18,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    Stores.slice(0, 20).map(store => {
+    Stores.slice(0, 30).map(store => {
       return [Geocoder.getLocationFromAddress(store.Address), store];
     }).forEach(([promise, store]) => {
       promise.then(value => {

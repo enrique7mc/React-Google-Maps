@@ -37,9 +37,6 @@ export default class Map extends Component {
 }
 
 var divStyle = {
-  border: 'black',
-  borderWidth: 1,
-  borderStyle: 'solid',
   margin: 0,
   height: 600,
   width: '100%'

@@ -6,11 +6,12 @@
 
 .list h2 {
   margin-bottom: 0;
+  font-family: 'Raleway', sans-serif;
 }
 
 .list ul {
   list-style-type: none;
-  border: 1px solid black;
+  border: 1px solid #5f6060;
   padding: 0;
   max-width: 500px;
 }
@@ -18,6 +19,7 @@
 .list li {
   display: flex;
   justify-content: space-between;
+  font-family: 'Raleway', sans-serif;
   padding: 4px;
 }
 
