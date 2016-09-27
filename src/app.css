@@ -1,0 +1,31 @@
+.list {
+  margin: 0 auto;
+  width: 500px;
+  text-align: center;
+}
+
+.list h2 {
+  margin-bottom: 0;
+}
+
+.list ul {
+  list-style-type: none;
+  border: 1px solid black;
+  padding: 0;
+  max-width: 500px;
+}
+
+.list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px;
+}
+
+.list li:nth-child(even) {
+  background-color: #eaecef;
+}
+
+.list li span {
+  display: inline-block;
+  line-height: 28px;
+}

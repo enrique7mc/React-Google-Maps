@@ -3,11 +3,6 @@ import GoogleMap from 'google-map-react';
 import MyGreatPlace from './MyGreatPlace';
 import Cache from './util/Cache';
 
-
-/*
-* Use this component as a launching-pad to build your functionality.
-*
-*/
 export default class Map extends Component {
   static propTypes = {
     center: PropTypes.array,
@@ -18,14 +13,12 @@ export default class Map extends Component {
 
   static defaultProps = {
     center: [19.3885, -99.140222],
-    zoom: 11,
+    zoom: 12,
     markers: [{
       lat: 19.3885,
       lng: -99.140222
     }]
   };
-
-
 
   render() {
     return (
@@ -45,8 +38,9 @@ export default class Map extends Component {
 
 var divStyle = {
   border: 'black',
-  borderWidth: 2,
+  borderWidth: 1,
   borderStyle: 'solid',
+  margin: 0,
   height: 600,
-  width: 800
+  width: '100%'
 };

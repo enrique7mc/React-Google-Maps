@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ListItem from './ListItem';
+import styles from './app.css';
 
 export default class FavoriteList extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ export default class FavoriteList extends Component {
 
   render() {
     return (
-      <div>
+      <div className={styles.list}>
         <h2>Favorite Stores</h2>
         <ul>
           {
@@ -32,12 +33,3 @@ export default class FavoriteList extends Component {
     );
   }
 }
-
-{/* <li key={store}>
-  <span>{store}</span>
-  <img
-    src="../assets/delete.png"
-    data-index={i}
-    style={{height: 28, width: 28}}
-    onClick={this.onItemDeleted}/>
-</li> */}
