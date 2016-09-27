@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import ListItem from './ListItem';
 
 export default class FavoriteList extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.onItemDeleted = this.onItemDeleted.bind(this);
   }
 
@@ -18,17 +19,25 @@ export default class FavoriteList extends Component {
         <ul>
           {
             this.props.items.map((store, i) =>
-              <li key={store}>
-                <span>{store}</span>
-                <img
-                  src="../assets/delete.png"
-                  data-index={i}
-                  style={{height: 28, width: 28}}
-                  onClick={this.onItemDeleted}/>
-              </li>)
+              <ListItem
+                key={store}
+                store={store}
+                index={i}
+                onItemDeleted={this.onItemDeleted}
+              />
+            )
           }
         </ul>
       </div>
     );
   }
 }
+
+{/* <li key={store}>
+  <span>{store}</span>
+  <img
+    src="../assets/delete.png"
+    data-index={i}
+    style={{height: 28, width: 28}}
+    onClick={this.onItemDeleted}/>
+</li> */}
